@@ -24,16 +24,13 @@ function App() {
       const newWidth = (event.clientX / window.innerWidth) * 100;
       setLeftWidth(Math.max(10, Math.min(newWidth, 90))); // Restrict width between 10% and 90%
     } else if (resizeDirection.current === "vertical") {
-      const newHeight = (event.clientY / window.innerHeight) * 100;
-      const remainingHeight = 100 - newHeight;
+      const containerHeight = event.clientY;
       if (resizeTarget.current === "top-resizer") {
-        setTopHeight(Math.max(10, Math.min(newHeight, 90))); // Restrict height between 10% and 90%
-        setMiddleHeight(remainingHeight - 33); // Adjust middle container height
+        setTopHeight(containerHeight);
       } else if (resizeTarget.current === "middle-resizer") {
-        setMiddleHeight(Math.max(10, Math.min(newHeight, 90))); // Restrict height between 10% and 90%
-        setTopHeight(remainingHeight - 33); // Adjust top container height
+        setMiddleHeight(containerHeight);
       } else if (resizeTarget.current === "right-top-resizer") {
-        setRightTopHeight(Math.max(10, Math.min(newHeight, 90))); // Restrict height between 10% and 90%
+        setRightTopHeight(containerHeight);
       }
     }
   };
@@ -57,7 +54,7 @@ function App() {
     <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
       {/* Left Panel */}
       <div style={{ width: `${leftWidth}%`, display: "flex", flexDirection: "column", background: "lightgray" }}>
-        <div style={{ height: `${topHeight}%`, background: "red" }}>Dario</div>
+        <div style={{ height: `${topHeight}px`, background: "red" }}>Dario</div>
         <div
           id="top-resizer"
           style={{
@@ -68,7 +65,7 @@ function App() {
           }}
           onMouseDown={() => handleMouseDown("vertical", "top-resizer")}
         ></div>
-        <div style={{ height: `${middleHeight}%`, background: "green" }}></div>
+        <div style={{ height: `${middleHeight}px`, background: "green" }}></div>
         <div
           id="middle-resizer"
           style={{
@@ -95,7 +92,7 @@ function App() {
 
       {/* Right Panel */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "lightblue" }}>
-        <div style={{ height: `${rightTopHeight}%`, background: "lightcoral" }}></div>
+        <div style={{ height: `${rightTopHeight}px`, background: "lightcoral" }}></div>
         <div
           id="right-top-resizer"
           style={{
